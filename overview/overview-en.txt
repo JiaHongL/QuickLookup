@@ -1,0 +1,3 @@
+Usage instructions: Select text on a webpage, right-click, and choose the online dictionary you want to search.
+
+PS: You can click the icon of the extension on the top right to adjust the menu's order or display.

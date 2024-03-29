@@ -1,0 +1,17 @@
+{
+  "extension_name": {
+    "message": "quick lookup"
+  },
+  "extension_description": {
+    "message":  "此工具提供了右鍵快速查詢相關線上字典的快查功能。"
+  },
+  "title":{
+    "message": "選單設定"
+  },
+  "tip":{
+    "message": "提示 : 拖曳可調整選單項目排序"
+  },
+  "enable": {
+    "message": "已啟用："
+  }
+}
