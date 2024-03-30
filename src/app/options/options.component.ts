@@ -41,14 +41,21 @@ import { SkeletonComponent } from './skeleton/skeleton.component';
           <ng-template pTemplate="header">
             <app-switch-mode-dark-button></app-switch-mode-dark-button>
             <p-dropdown
-              size="small" 
               class="ml-2"
-              [(ngModel)]="currentTheme" 
-              (ngModelChange)="themeService.switchTheme(currentTheme)" 
-              [options]="themeService.themeOptions" 
+              [options]="themeService.themeGroup" 
+              [(ngModel)]="currentTheme"
+              (ngModelChange)="themeService.switchTheme(currentTheme)"  
+              placeholder="Select a Theme" 
+              [group]="true"
               optionLabel="name"
               optionValue="code"
-              >
+              [style]="{width: '220px'}"
+            >
+                <ng-template let-group pTemplate="group">
+                    <div class="flex font-bold align-items-center">
+                        <span>{{ group.label }}</span>
+                    </div>
+                </ng-template>
             </p-dropdown>
           </ng-template>
 
