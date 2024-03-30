@@ -53,7 +53,7 @@ import { TableModule } from 'primeng/table';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkeletonComponent {
-  fakeDate = Array.from({ length: 9 }).map((_, i) => ({
+  fakeDate = Array.from({ length: 7 }).map((_, i) => ({
     code: i + 1,
     name: 'Product Name',
     category: 'Category',
