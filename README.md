@@ -15,6 +15,8 @@
 設定頁可以進行新增修改刪除，還要選擇不一樣的主題樣式。
 ![03](https://hackmd.io/_uploads/ByLTkDSJA.png)
 
+![05](https://hackmd.io/_uploads/rk6Pk_ByA.png)
+
 編輯視窗的畫面
 ![04](https://hackmd.io/_uploads/H1IpJvrkA.png)
 
