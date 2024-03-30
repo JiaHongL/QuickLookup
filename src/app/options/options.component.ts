@@ -215,6 +215,7 @@ export class OptionsComponent {
     const ref = this.dialogService.open(EditorDialogComponent, {
       header: action === Action.Create ? '新增視窗' : '編輯視窗',
       width: '50%',
+      dismissableMask: true,
       data: {
         data,
         action: action 
@@ -262,6 +263,7 @@ export class OptionsComponent {
       acceptIcon:"none",
       rejectIcon:"none",
       rejectButtonStyleClass:"p-button-text",
+      dismissableMask: true,
       accept: () => {
         this.dictionaryList.set(this.dictionaryList().filter((item) => item.id !== id));
         this.messageService.add({severity:'success', summary:'刪除成功', detail:'已刪除此設定'});
