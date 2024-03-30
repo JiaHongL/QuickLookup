@@ -34,7 +34,7 @@ import { SwitchModeDarkButtonComponent } from '../components/switch-mode-dark-bu
       <div cdkDropList class="drag-list" (cdkDropListDropped)="drop($event)">
         @for (item of dictionaryList(); track item.id;let idx = $index, e = $even) {
           <div cdkDrag class="drag-box">
-            <div>
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" style="width:250px">
               {{ item.name }}
             </div>
             <div>
