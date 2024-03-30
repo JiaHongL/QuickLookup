@@ -34,7 +34,127 @@
               "src/manifest.json"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/theme/md-indigo-light.scss",
+                "bundleName": "md-indigo-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/md-indigo-dark.scss",
+                "bundleName": "md-indigo-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/bootstrap4-blue-light.scss",
+                "bundleName": "bootstrap4-blue-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/bootstrap4-blue-dark.scss",
+                "bundleName": "bootstrap4-blue-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/bootstrap4-purple-light.scss",
+                "bundleName": "bootstrap4-purple-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/bootstrap4-purple-dark.scss",
+                "bundleName": "bootstrap4-purple-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/md-deeppurple-light.scss",
+                "bundleName": "md-deeppurple-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/md-deeppurple-dark.scss",
+                "bundleName": "md-deeppurple-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/mdc-indigo-light.scss",
+                "bundleName": "mdc-indigo-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/mdc-indigo-dark.scss",
+                "bundleName": "mdc-indigo-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/mdc-deeppurple-light.scss",
+                "bundleName": "mdc-deeppurple-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/mdc-deeppurple-dark.scss",
+                "bundleName": "mdc-deeppurple-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/viva-light.scss",
+                "bundleName": "viva-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/viva-dark.scss",
+                "bundleName": "viva-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/soho-light.scss",
+                "bundleName": "soho-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/soho-dark.scss",
+                "bundleName": "soho-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-blue-light.scss",
+                "bundleName": "lara-blue-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-blue-dark.scss",
+                "bundleName": "lara-blue-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-indigo-light.scss",
+                "bundleName": "lara-indigo-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-indigo-dark.scss",
+                "bundleName": "lara-indigo-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-purple-light.scss",
+                "bundleName": "lara-purple-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-purple-dark.scss",
+                "bundleName": "lara-purple-dark",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-teal-light.scss",
+                "bundleName": "lara-teal-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme/lara-teal-dark.scss",
+                "bundleName": "lara-teal-dark",
+                "inject": false
+              }
             ],
             "scripts": []
           },

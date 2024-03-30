@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+.wrapper{
+  width: 100%;
+  height: 100vh;
+  background: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark-layout {
+  .wrapper {
+    background: transparent;
+  }
+}

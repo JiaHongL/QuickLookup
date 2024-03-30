@@ -17,6 +17,10 @@
       "js": ["content-script.js"]
     }
   ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "web_accessible_resources": [
     {
       "resources": ["index.html", "/*.js", "/*.css"],
@@ -30,6 +34,7 @@
     "128": "assets/128.png"
   },
   "action": {
-    "default_popup": "index.html"
-  }
+    "default_popup": "popup.html"
+  },
+  "options_page": "index.html"
 }

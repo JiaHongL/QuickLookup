@@ -58,56 +58,64 @@ let contextMenuItems = [
   {
     id: "cambridgeDictionary",
     name: "Cambridge Dictionary",
-    title: "Search '%s' in Cambridge Dictionary",
+    url: "https://dictionary.cambridge.org/dictionary/english-chinese-traditional/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id: "cambridgeDictionaryEn",
     name: "Cambridge Dictionary (English)",
-    title: "Search '%s' in Cambridge Dictionary (English)",
+    url: "https://dictionary.cambridge.org/dictionary/english/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id:"merriamWebsterDictionary",
     name: "Merriam Webster Dictionary",
-    title: "Search '%s' in Merriam Webster Dictionary",
+    url: "https://www.merriam-webster.com/dictionary/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id:"longmanDictionary",
     name: "Longman Dictionary Dictionary",
-    title: "Search '%s' in Longman Dictionary",
+    url: "https://www.ldoceonline.com/dictionary/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id: "collinsDictionary",
     name: "Collins Dictionary",
-    title: "Search '%s' in Collins Dictionary",
+    url: "https://www.collinsdictionary.com/dictionary/english/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id:"oxfordDictionary",
     name: "Oxford Dictionary",
-    title: "Search '%s' in Oxford Dictionary",
+    url: "https://www.oxfordlearnersdictionaries.com/definition/english/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id: "yahooDictionary",
     name: "Yahoo Dictionary",
-    title: "Search '%s' in Yahoo Dictionary",
+    url: "https://tw.dictionary.search.yahoo.com/search?p=",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
   {
     id: "youGlish",
     name: "YouGlish",
-    title: "Search '%s' in YouGlish",
+    url: "https://youglish.com/search/",
+    title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
   },
@@ -128,7 +136,7 @@ chrome.runtime.onInstalled.addListener(() => {
       if (data.visible){
         let item = {
           id: data.id,
-          title: data.title,
+          title: data.title + ' ' + data.name,
           contexts: data.contexts,
         }
         chrome.contextMenus.create(item);
@@ -139,55 +147,14 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  switch (info.menuItemId) {
-    case "yahooDictionary":
-      if (info.selectionText) {
-        const url = `https://tw.dictionary.search.yahoo.com/search?p=${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "cambridgeDictionary":
-      if (info.selectionText) {
-        const url = `https://dictionary.cambridge.org/dictionary/english-chinese-traditional/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "cambridgeDictionaryEn":
-      if (info.selectionText) {
-        const url = `https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "merriamWebsterDictionary":
-      if (info.selectionText) {
-        const url = `https://www.merriam-webster.com/dictionary/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "youGlish":
-      if (info.selectionText) {
-        const url = `https://youglish.com/search/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "longmanDictionary":
-      if (info.selectionText) {
-        const url = `https://www.ldoceonline.com/dictionary/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "collinsDictionary":
-      if (info.selectionText) {
-        const url = `https://www.collinsdictionary.com/dictionary/english/${encodeURIComponent(info.selectionText)}`;
-        chrome.tabs.create({ url });
-      }
-      break;
-    case "oxfordDictionary":
-      if (info.selectionText) {
-        const url = `https://www.oxfordlearnersdictionaries.com/definition/english/${encodeURIComponent(info.selectionText.toLowerCase())}?q=${encodeURIComponent(info.selectionText.toLowerCase())}`;
-        chrome.tabs.create({ url });
-      }
-      break;
+  const url = contextMenuItems.find((item) => item.id === info.menuItemId)?.url;
+  if (
+    url &&
+    info.selectionText
+  ) {
+    chrome.tabs.create({
+      url: url + encodeURIComponent(info.selectionText)
+    });
   }
 });
 
@@ -198,12 +165,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (data.visible){
           let item = {
             id: data.id,
-            title: data.title,
+            title: data.title + ' ' + data.name,
             contexts: data.contexts,
           }
           chrome.contextMenus.create(item);
         }
       });
+    });
+  }
+  if(
+    request?.action === "updateTheme" &&
+    request?.data &&
+    request?.data?.theme &&
+    request?.data?.darkMode
+  ) {
+    chrome.runtime.sendMessage({
+      action: "updateThemeBroadcast",
+      data: request.data
     });
   }
 });
