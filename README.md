@@ -42,3 +42,8 @@
 - 名稱過長需顯示...
 - theme dropdown 改為 group
 - 微調 skeleton 效果
+
+### 0.0.4 版
+送審日期：2024/3/31
+通過日期：審核中
+- 新增新選項時，要更新 background.js 的選單資料

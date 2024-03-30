@@ -160,6 +160,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request?.action === "updateContextMenu") {
+    contextMenuItems = request.data;
     chrome.contextMenus.removeAll(() => {
       request.data.forEach((data) => {
         if (data.visible){
