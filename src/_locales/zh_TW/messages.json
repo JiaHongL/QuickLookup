@@ -5,13 +5,76 @@
   "extension_description": {
     "message":  "此工具提供了右鍵快速查詢相關線上字典的快查功能。"
   },
-  "title":{
+  "popup_title":{
     "message": "選單設定"
   },
-  "tip":{
+  "popup_tip":{
     "message": "提示 : 拖曳可調整選單項目排序"
   },
-  "enable": {
+  "popup_enable": {
     "message": "已啟用："
+  },
+  "options_name": {
+    "message": "名稱"
+  },
+  "options_url":{
+    "message": "連結"
+  },
+  "options_operate": {
+    "message": "操作"
+  },
+  "options_enable": {
+    "message": "啟用"
+  },
+  "options_enabled": {
+    "message": "已啟用"
+  },
+  "options_total": {
+    "message": "總數"
+  },
+  "common_dialog_tip": {
+    "message": "提示"
+  },
+  "common_operate_success": {
+    "message": "操作成功"
+  },
+  "common_dialog_send": {
+    "message": "送出"
+  },
+  "common_dialog_cancel": {
+    "message": "取消"
+  },
+  "common_dialog_delete": {
+    "message": "刪除"
+  },
+  "options_reset_button": {
+    "message": "恢復系統預設值"
+  },
+  "options_reset_confirm": {
+    "message": "確定要恢復系統預設值嗎？"
+  },
+  "options_reset_success": {
+    "message": "恢復成功"
+  },
+  "options_order_updated": {
+    "message": "已更新排序"
+  },
+  "options_delete_confirm": {
+    "message": "確定要刪除此項目嗎？"
+  },
+  "options_delete_success": {
+    "message": "刪除成功"
+  },
+  "options_update_success": {
+    "message": "更新成功"
+  },
+  "options_add_success": {
+    "message": "新增成功"
+  },
+  "options_add_dialog": {
+    "message": "新增視窗"
+  },
+  "options_edit_dialog": {
+    "message": "編輯視窗"
   }
 }

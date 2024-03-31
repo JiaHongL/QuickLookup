@@ -1,0 +1,80 @@
+{
+  "extension_name": {
+    "message": "quick lookup"
+  },
+  "extension_description": {
+    "message":  "This tool provides quick lookup functionality for relevant online dictionaries via right-click."
+  },
+  "popup_title":{
+    "message": "Menu Settings"
+  },
+  "popup_tip":{
+    "message": "Tip: Drag to adjust the order of menu items"
+  },
+  "popup_enable": {
+    "message": "Enabled:"
+  },
+  "options_name": {
+    "message": "Name"
+  },
+  "options_url":{
+    "message": "Link"
+  },
+  "options_operate": {
+    "message": "Operation"
+  },
+  "options_enable": {
+    "message": "Enable"
+  },
+  "options_enabled": {
+    "message": "Enabled"
+  },
+  "options_total": {
+    "message": "Total"
+  },
+  "common_dialog_tip": {
+    "message": "Tip"
+  },
+  "common_operate_success": {
+    "message": "Operation successful"
+  },
+  "common_dialog_send": {
+    "message": "Send"
+  },
+  "common_dialog_cancel": {
+    "message": "Cancel"
+  },
+  "common_dialog_delete": {
+    "message": "Delete"
+  },
+  "options_reset_button": {
+    "message": "Restore system defaults"
+  },
+  "options_reset_confirm": {
+    "message": "Are you sure you want to restore the system defaults?"
+  },
+  "options_reset_success": {
+    "message": "Restore successful"
+  },
+  "options_order_updated": {
+    "message": "Order updated"
+  },
+  "options_delete_confirm": {
+    "message": "Are you sure you want to delete this item?"
+  },
+  "options_delete_success": {
+    "message": "Delete successful"
+  },
+  "options_update_success": {
+    "message": "Update successful"
+  },
+  "options_add_success": {
+    "message": "Add successful"
+  },
+  "options_add_dialog": {
+    "message": "Add"
+  },
+  "options_edit_dialog": {
+    "message": "Edit"
+  }
+}

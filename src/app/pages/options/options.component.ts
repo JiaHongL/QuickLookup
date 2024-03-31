@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MenuItem } from '../../models/menu-item.model';
 
 import Action from './editorDialog/action.emun';
+import { ContextMenuItems } from '../../const/context-menu-items.const';
 
 import { ThemeService } from '../../theme.service';
 
@@ -20,15 +21,30 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { EditorDialogComponent } from './editorDialog/editorDialog.component';
 import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mode-dark-button/switch-mode-dark-button.component';
-import { ContextMenuItems } from '../../const/context-menu-items.const';
 import { SkeletonComponent } from './skeleton/skeleton.component';
-
+import { I18nPipe } from '../../shared/pipes/i18n.pipe';
 
 @Component({
   selector: 'app-options',
   standalone: true,
-  imports: [CommonModule, ButtonModule, SwitchModeDarkButtonComponent, DropdownModule, FormsModule, ToolbarModule, PanelModule, TableModule, InputSwitchModule,DragDropModule,SkeletonComponent],
-  providers: [DialogService],
+  imports: [
+      CommonModule,
+      FormsModule, 
+      ButtonModule, 
+      SwitchModeDarkButtonComponent, 
+      DropdownModule,
+      ToolbarModule, 
+      PanelModule, 
+      TableModule, 
+      InputSwitchModule,
+      DragDropModule,
+      SkeletonComponent,
+      I18nPipe
+  ],
+  providers: [
+    DialogService,
+    I18nPipe
+  ],
   template: `
     @if(isLoading()){
       <div class="wrapper">
@@ -82,10 +98,10 @@ import { SkeletonComponent } from './skeleton/skeleton.component';
                 <tr>
                     <th></th>
                     <th>#</th>
-                    <th>名稱</th>
-                    <th>連結</th>
-                    <th>操作</th>
-                    <th>啟用</th>
+                    <th>{{ 'options_title' | i18n }}</th>
+                    <th>{{ 'options_url' | i18n }}</th>
+                    <th>{{ 'options_operate' | i18n }}</th>
+                    <th>{{ 'options_enable' | i18n }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-index="rowIndex">
@@ -129,11 +145,11 @@ import { SkeletonComponent } from './skeleton/skeleton.component';
                     <div class="flex align-items-center gap-2">
                         <p-button 
                           [outlined]="isDarkMode()" 
-                          label="恢復系統預設值" 
+                          [label]="'options_reset_button'|i18n" 
                           size="small" (click)="reset()"
                         ></p-button>
                     </div>
-                    <span class="p-text-secondary">已啟用 / 總筆數： {{enableCount()}} / {{dictionaryList().length}}</span>
+                    <span class="p-text-secondary"> {{ 'options_enabled' | i18n }} / {{ 'options_total' | i18n }}： {{enableCount()}} / {{dictionaryList().length}}</span>
                 </div>
             </ng-template>
         </p-panel>
@@ -152,6 +168,8 @@ export class OptionsComponent {
   confirmationService = inject(ConfirmationService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
+  i18n = inject(I18nPipe);
+  operateSuccessWord = this.i18n.transform('common_operate_success');
 
   contextMenuItems = ContextMenuItems;
 
@@ -219,8 +237,10 @@ export class OptionsComponent {
       }
     };
 
+    const header = action === Action.Create ? this.i18n.transform('options_add_dialog') : this.i18n.transform('options_edit_dialog');
+    console.log(header);
     const ref = this.dialogService.open(EditorDialogComponent, {
-      header: action === Action.Create ? '新增視窗' : '編輯視窗',
+      header,
       width: '50%',
       dismissableMask: true,
       data: {
@@ -240,7 +260,11 @@ export class OptionsComponent {
       switch (result.action) {
         case Action.Create:
           this.dictionaryList.set([...this.dictionaryList(), result.data]);
-          this.messageService.add({severity:'success', summary:'新增成功', detail:'已新增此設定'});
+          this.messageService.add({
+            severity:'success', 
+            summary: this.operateSuccessWord, 
+            detail: this.i18n.transform('options_add_success')
+          });
           break;
         case Action.Update:
           this.dictionaryList.update(todos => todos.map(todo => {
@@ -249,11 +273,19 @@ export class OptionsComponent {
             }
             return todo;
           }));
-          this.messageService.add({severity:'success', summary:'更新成功', detail:'已更新此設定'});
+          this.messageService.add({
+            severity:'success', 
+            summary: this.operateSuccessWord, 
+            detail: this.i18n.transform('options_update_success')
+          });
           break;
         case Action.Delete:
             this.dictionaryList.set(this.dictionaryList().filter((item) => item.id !== id));
-            this.messageService.add({severity:'success', summary:'刪除成功', detail:'已刪除此設定'});
+            this.messageService.add({
+              severity:'success', 
+              summary:this.operateSuccessWord, 
+              detail: this.i18n.transform('options_delete_success')
+            });
           break;
         default:
           break;
@@ -264,8 +296,8 @@ export class OptionsComponent {
   delete(id:string){
     this.confirmationService.confirm({
       target: document.body,
-      message: '確定刪除此設定?',
-      header: '提示',
+      message: this.i18n.transform('options_delete_confirm'),
+      header: this.i18n.transform('common_dialog_tip'),
       icon: 'pi pi-exclamation-triangle',
       acceptIcon:"none",
       rejectIcon:"none",
@@ -273,7 +305,11 @@ export class OptionsComponent {
       dismissableMask: true,
       accept: () => {
         this.dictionaryList.set(this.dictionaryList().filter((item) => item.id !== id));
-        this.messageService.add({severity:'success', summary:'刪除成功', detail:'已刪除此設定'});
+        this.messageService.add({
+          severity:'success', 
+          summary: this.operateSuccessWord, 
+          detail: this.i18n.transform('options_delete_success')
+        });
       },
       reject: () => {},
     });
@@ -282,15 +318,19 @@ export class OptionsComponent {
   reset(){
     this.confirmationService.confirm({
       target: document.body,
-      message: '確定恢復系統預設值?',
-      header: '提示',
+      message: this.i18n.transform('options_reset_confirm'),
+      header: this.i18n.transform('common_dialog_tip'),
       icon: 'pi pi-exclamation-triangle',
       acceptIcon:"none",
       rejectIcon:"none",
       rejectButtonStyleClass:"p-button-text",
       accept: () => {
         this.dictionaryList.set(this.contextMenuItems);
-        this.messageService.add({severity:'success', summary:'執行成功', detail:'已恢復原始設定'});
+        this.messageService.add({
+          severity: 'success', 
+          summary: this.operateSuccessWord, 
+          detail: this.i18n.transform('options_reset_success')
+      });
       },
       reject: () => {},
     });
@@ -298,7 +338,11 @@ export class OptionsComponent {
 
   onRowReorder(event:any){
     this.dictionaryList.set([...this.dictionaryList()]);
-    this.messageService.add({severity:'success', summary:'更新成功', detail:'已更新排序'});
+    this.messageService.add({
+        severity:'success', 
+        summary: this.operateSuccessWord, 
+        detail: this.i18n.transform('options_order_updated')
+    });
   }
 
   setList() {

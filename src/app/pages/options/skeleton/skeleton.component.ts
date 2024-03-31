@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
+import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
 
 @Component({
   selector: 'app-skeleton',
@@ -9,7 +10,8 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     SkeletonModule,
-    TableModule
+    TableModule,
+    I18nPipe
   ],
   template: `
     <div class="border-round border-1 surface-border p-4 surface-card" style="width:900px;height:640px;">
@@ -27,10 +29,10 @@ import { TableModule } from 'primeng/table';
             <tr>
               <th></th>
               <th>#</th>
-              <th>名稱</th>
-              <th>連結</th>
-              <th>操作</th>
-              <th>啟用</th>
+              <th>{{ 'options_title' | i18n }}</th>
+              <th>{{ 'options_url' | i18n }}</th>
+              <th>{{ 'options_operate' | i18n }}</th>
+              <th>{{ 'options_enable' | i18n }}</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-product>

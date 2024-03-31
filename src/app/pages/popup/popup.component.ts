@@ -8,12 +8,24 @@ import { MenuItem } from '../../models/menu-item.model';
 
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
+
 import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mode-dark-button/switch-mode-dark-button.component';
+import { I18nPipe } from '../../shared/pipes/i18n.pipe';
 
 @Component({
   selector: 'app-popup',
   standalone: true,
-  imports: [CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, InputSwitchModule, FormsModule, ButtonModule , SwitchModeDarkButtonComponent] ,
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    CdkDropList, 
+    CdkDrag, 
+    CdkDragPlaceholder, 
+    InputSwitchModule, 
+    ButtonModule , 
+    SwitchModeDarkButtonComponent,
+    I18nPipe
+  ] ,
   template: `
     <div class="popup">
       <div class="tool">
@@ -29,7 +41,7 @@ import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mo
         <app-switch-mode-dark-button></app-switch-mode-dark-button>
       </div>
       <span class="title">
-          {{i18n('title')}}
+          {{ 'popup_title' | i18n }}
       </span>
       <div cdkDropList class="drag-list" (cdkDropListDropped)="drop($event)">
         @for (item of dictionaryList(); track item.id;let idx = $index, e = $even) {
@@ -45,9 +57,9 @@ import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mo
       </div>
       <div class="tips">
         <div>
-          {{i18n('tip')}}
+          {{ 'popup_tip' | i18n}}
         </div>
-        <div>{{i18n('enable')}}{{enableCount()}}</div>
+        <div>{{'popup_enable' | i18n}}{{enableCount()}}</div>
       </div>
     </div>
   `,
@@ -98,15 +110,6 @@ export class PopupComponent {
   setList() {
     this.dictionaryList.set([...this.dictionaryList()]);
   }
-
-  i18n(key: any, params = []) {
-    try {
-      return chrome.i18n.getMessage(key, params);
-    } catch (error) {
-      console.log("i18n", error);
-      return "";
-    }
-  };
 
   openOptionsPage() {
     chrome.runtime.openOptionsPage();
