@@ -38,6 +38,9 @@
   "common_operate_success": {
     "message": "Operation successful"
   },
+  "common_operate_failed": {
+    "message": "Operation failed"
+  },
   "common_dialog_send": {
     "message": "Send"
   },
@@ -76,5 +79,25 @@
   },
   "options_edit_dialog": {
     "message": "Edit"
+  },
+  "options_file_error_please_check": {
+    "message": "File error, please check"
+  },
+  "options_import_file_confirm":{
+    "message": "Are you sure you want to import the file? </br> $fileName$",
+    "placeholders": {
+      "fileName": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_import_success": {
+    "message": "Import successful"
+  },
+  "options_import_settings_button": {
+    "message": "Import settings file"
+  },
+  "options_export_settings_button": {
+    "message": "Export settings file"
   }
 }

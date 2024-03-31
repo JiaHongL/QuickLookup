@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Injector, ViewEncapsulation, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Injector, ViewEncapsulation, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MenuItem } from '../../models/menu-item.model';
@@ -24,6 +24,7 @@ import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mo
 import { SkeletonComponent } from './skeleton/skeleton.component';
 import { I18nPipe } from '../../shared/pipes/i18n.pipe';
 import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/buy-me-a-coffee.component';
+
 
 @Component({
   selector: 'app-options',
@@ -152,6 +153,23 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
                       size="small" 
                       (click)="reset()"
                     ></p-button>
+                    <p-button
+                      class="mr-2"
+                      [outlined]="isDarkMode()" 
+                      [label]="'options_export_settings_button'|i18n" 
+                      size="small"
+                      severity="success" 
+                      (click)="exportSettings()"
+                    ></p-button>
+                    <p-button
+                      class="mr-2"
+                      [outlined]="isDarkMode()" 
+                      [label]="'options_import_settings_button'|i18n" 
+                      size="small"
+                      severity="warning" 
+                      (click)="importFileInput.click()"
+                    ></p-button>
+                    <input #importFileInput type="file" (change)="importSettings($event)" hidden/>
                 </div>
                 <span class="p-text-secondary"> {{ 'options_enabled' | i18n }} / {{ 'options_total' | i18n }}： {{enableCount()}} / {{dictionaryList().length}}</span>
                 <div class="flex justify-content-center absolute" style="right:-14px;bottom:-62px">
@@ -177,6 +195,8 @@ export class OptionsComponent {
   messageService = inject(MessageService);
   i18n = inject(I18nPipe);
   operateSuccessWord = this.i18n.transform('common_operate_success');
+
+  importFileInput = viewChild.required<ElementRef<HTMLInputElement>>('importFileInput');
 
   contextMenuItems = ContextMenuItems;
 
@@ -355,11 +375,113 @@ export class OptionsComponent {
     this.dictionaryList.set([...this.dictionaryList()]);
   }
 
+  exportSettings(){
+
+    const exportData = this.dictionaryList().map((item) => {
+      return {
+        name: item.name,
+        url: item.url,
+        visible: item.visible
+      }
+    })
+
+    const json = JSON.stringify(
+      {
+        settings: exportData
+      },
+      null,
+      2
+    );
+    const blob = new Blob([json], { type: 'application/json' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = (now.getMonth() + 1).toString().padStart(2, "0");
+    let date = now.getDate().toString().padStart(2, "0");
+    let hour = now.getHours().toString().padStart(2, "0");
+    let minute = now.getMinutes().toString().padStart(2, "0");
+    let seconds = now.getSeconds().toString().padStart(2, "0");
+
+    const fileName = `quick-lookup-settings-${year}${month}${date}_${hour}_${minute}_${seconds}.json`;
+
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  importSettings(event:Event){
+    const file = (event.target as HTMLInputElement)?.files?.[0] as File;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = event?.target?.result as string;
+        const data = JSON.parse(json);
+
+        if (this.checkJson(data)) {
+          this.confirmationService.confirm({
+            target: document.body,
+            message: this.i18n.transform('options_import_file_confirm', file.name),
+            header: this.i18n.transform('common_dialog_tip'),
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon:"none",
+            rejectIcon:"none",
+            rejectButtonStyleClass:"p-button-text",
+            dismissableMask: true,
+            accept: () => {
+              const newSettings:MenuItem[] = data.settings.map((item:any) => {
+                return {
+                  id: this.generateGUID(),
+                  name: item.name,
+                  url: item.url,
+                  title: "Search '%s' in",
+                  contexts: ["selection"],
+                  visible: item.visible,
+                }
+              });
+              this.dictionaryList.set(newSettings);
+              this.messageService.add({
+                severity:'success', 
+                summary: this.operateSuccessWord, 
+                detail: this.i18n.transform('options_import_success')
+              });
+              this.importFileInput().nativeElement.value = '';
+            },
+            reject: () => {
+              this.importFileInput().nativeElement.value = '';
+            },
+          });
+        } else {
+          this.messageService.add({
+            severity:'error', 
+            summary: this.i18n.transform('common_operate_failed'),
+            detail: this.i18n.transform('options_file_error_please_check')
+          });
+          this.importFileInput().nativeElement.value = '';
+        }
+      } catch (error) {
+        this.importFileInput().nativeElement.value = '';
+        console.error(error);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  checkJson(json:any){
+    // 判斷是否有 settings & settings 是否為陣列 & settings 是否有 name, url, visible & visible 是否為 boolean & name, url 是否為字串
+    return json.settings && Array.isArray(json.settings) && json.settings.every((item:any) => {
+      return item.name && item.url && item.visible !== undefined && typeof item.visible === 'boolean' && typeof item.name === 'string' && typeof item.url === 'string';
+    });
+  }
+
   private generateGUID() {
     const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     const timestamp = new Date().getTime();
     const timeString = timestamp.toString(16);
-    return timeString + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4();
+    return timeString + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4()
   }
 
 }

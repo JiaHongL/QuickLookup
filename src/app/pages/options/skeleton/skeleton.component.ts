@@ -14,7 +14,7 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
     I18nPipe
   ],
   template: `
-    <div class="border-round border-1 surface-border p-4 surface-card" style="width:900px;height:640px;">
+    <div class="border-round border-1 surface-border p-4 surface-card" style="width:920px;height:645px;">
         <div class="flex justify-content-between align-items-center mb-3">
             <div class="flex align-items-center"> 
               <p-skeleton size="2.5rem" styleClass="mr-2"></p-skeleton>
@@ -50,7 +50,11 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
           </ng-template>
       </p-table>
         <div class="flex justify-content-between align-items-center mt-3">
-            <p-skeleton width="8rem" height="2.3rem"></p-skeleton>
+            <div class="flex">
+              <p-skeleton class="mr-2" width="8rem" height="2.3rem"></p-skeleton>
+              <p-skeleton class="mr-2" width="8rem" height="2.3rem"></p-skeleton>
+              <p-skeleton class="mr-2" width="8rem" height="2.3rem"></p-skeleton>
+            </div>
             <p-skeleton width="9rem" height="1.5rem"></p-skeleton>
         </div>
     </div>

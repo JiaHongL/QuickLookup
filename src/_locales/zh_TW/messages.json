@@ -38,6 +38,9 @@
   "common_operate_success": {
     "message": "操作成功"
   },
+  "common_operate_failed": {
+    "message": "操作失敗"
+  },
   "common_dialog_send": {
     "message": "送出"
   },
@@ -76,5 +79,25 @@
   },
   "options_edit_dialog": {
     "message": "編輯視窗"
+  },
+  "options_file_error_please_check": {
+    "message": "檔案格式錯誤，請檢查。"
+  },
+  "options_import_file_confirm":{
+    "message": "確定匯入 $fileName$ 的設定 ?",
+    "placeholders": {
+      "fileName": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_import_success": {
+    "message": "匯入成功"
+  },
+  "options_import_settings_button": {
+    "message": "匯入設定檔"
+  },
+  "options_export_settings_button": {
+    "message": "匯出設定檔"
   }
 }

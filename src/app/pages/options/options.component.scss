@@ -16,3 +16,7 @@
     background: transparent;
   }
 }
+
+.p-button.p-button-warning, .p-buttonset.p-button-warning > .p-button, .p-splitbutton.p-button-warning > .p-button {
+  color: white;
+}

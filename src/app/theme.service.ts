@@ -138,7 +138,7 @@ export class ThemeService {
     }
   ];
 
-  currentTheme = signal(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'mdc-indigo');
+  currentTheme = signal(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'md-indigo');
 
   currentDarkMode = signal(localStorage.getItem('darkMode') ? localStorage.getItem('darkMode') : 'n');
 
