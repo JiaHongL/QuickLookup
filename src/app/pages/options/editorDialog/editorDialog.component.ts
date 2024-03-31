@@ -87,13 +87,6 @@ export class EditorDialogComponent {
   confirmationService = inject(ConfirmationService);
   i18n = inject(I18nPipe);
 
-  constructor() {
-    effect(() => {
-      console.log('EditorDialogComponent', this.ref, this.config);
-      console.log('EditorDialogComponent', this.data);
-    });
-  }
-
   send(){
     this.ref.close({
       action: this.config.data.action,

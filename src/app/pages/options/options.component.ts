@@ -245,7 +245,6 @@ export class OptionsComponent {
     };
 
     const header = action === Action.Create ? this.i18n.transform('options_add_dialog') : this.i18n.transform('options_edit_dialog');
-    console.log(header);
     const ref = this.dialogService.open(EditorDialogComponent, {
       header,
       width: '50%',
