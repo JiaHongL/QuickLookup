@@ -23,6 +23,7 @@ import { EditorDialogComponent } from './editorDialog/editorDialog.component';
 import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mode-dark-button/switch-mode-dark-button.component';
 import { SkeletonComponent } from './skeleton/skeleton.component';
 import { I18nPipe } from '../../shared/pipes/i18n.pipe';
+import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/buy-me-a-coffee.component';
 
 @Component({
   selector: 'app-options',
@@ -39,7 +40,8 @@ import { I18nPipe } from '../../shared/pipes/i18n.pipe';
       InputSwitchModule,
       DragDropModule,
       SkeletonComponent,
-      I18nPipe
+      I18nPipe,
+      BuyMeACoffeeComponent
   ],
   providers: [
     DialogService,
@@ -141,16 +143,21 @@ import { I18nPipe } from '../../shared/pipes/i18n.pipe';
           </p-table>
 
           <ng-template pTemplate="footer">
-                <div class="flex flex-wrap align-items-center justify-content-between gap-3">
-                    <div class="flex align-items-center gap-2">
-                        <p-button 
-                          [outlined]="isDarkMode()" 
-                          [label]="'options_reset_button'|i18n" 
-                          size="small" (click)="reset()"
-                        ></p-button>
-                    </div>
-                    <span class="p-text-secondary"> {{ 'options_enabled' | i18n }} / {{ 'options_total' | i18n }}： {{enableCount()}} / {{dictionaryList().length}}</span>
+              <div class="flex flex-wrap align-items-center justify-content-between gap-3 relative">
+                <div class="flex align-items-center">
+                    <p-button
+                      class="mr-2"
+                      [outlined]="isDarkMode()" 
+                      [label]="'options_reset_button'|i18n" 
+                      size="small" 
+                      (click)="reset()"
+                    ></p-button>
                 </div>
+                <span class="p-text-secondary"> {{ 'options_enabled' | i18n }} / {{ 'options_total' | i18n }}： {{enableCount()}} / {{dictionaryList().length}}</span>
+                <div class="flex justify-content-center absolute" style="right:-14px;bottom:-62px">
+                  <app-buy-me-a-coffee/>
+                </div>  
+              </div>
             </ng-template>
         </p-panel>
       </div>
