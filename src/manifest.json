@@ -35,6 +35,5 @@
   },
   "action": {
     "default_popup": "popup.html"
-  },
-  "options_page": "index.html"
+  }
 }
