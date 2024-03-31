@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 
-import { MenuItem } from '../models/menu-item.model';
+import { MenuItem } from '../../models/menu-item.model';
 
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
-import { SwitchModeDarkButtonComponent } from '../components/switch-mode-dark-button/switch-mode-dark-button.component';
+import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mode-dark-button/switch-mode-dark-button.component';
 
 @Component({
   selector: 'app-popup',

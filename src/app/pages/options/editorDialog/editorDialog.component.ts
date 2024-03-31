@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { MenuItem } from '../../models/menu-item.model';
+import { MenuItem } from '../../../models/menu-item.model';
 
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 

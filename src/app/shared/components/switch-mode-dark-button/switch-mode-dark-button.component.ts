@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { ThemeService } from '../../theme.service';
+import { ThemeService } from '../../../theme.service';
 
 @Component({
   selector: 'app-switch-mode-dark-button',

@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Injector, ViewEncapsulation, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { MenuItem } from '../models/menu-item.model';
+import { MenuItem } from '../../models/menu-item.model';
 
 import Action from './editorDialog/action.emun';
 
-import { ThemeService } from '../theme.service';
+import { ThemeService } from '../../theme.service';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -19,8 +19,8 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { EditorDialogComponent } from './editorDialog/editorDialog.component';
-import { SwitchModeDarkButtonComponent } from '../components/switch-mode-dark-button/switch-mode-dark-button.component';
-import { ContextMenuItems } from '../const/context-menu-items.const';
+import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mode-dark-button/switch-mode-dark-button.component';
+import { ContextMenuItems } from '../../const/context-menu-items.const';
 import { SkeletonComponent } from './skeleton/skeleton.component';
 
 

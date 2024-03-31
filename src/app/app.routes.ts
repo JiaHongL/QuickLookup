@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { PopupComponent } from './popup/popup.component';
-import { HomeComponent } from './home/home.component';
-import { OptionsComponent } from './options/options.component';
+import { PopupComponent } from './pages/popup/popup.component';
+import { HomeComponent } from './pages/home/home.component';
+import { OptionsComponent } from './pages/options/options.component';
 
 export const routes: Routes = [
     { path: 'popup', component: PopupComponent },
