@@ -1,6 +1,8 @@
-使用介紹：選取網頁文字，點選右鍵，選擇想查詢的線上字典。
+使用介紹：
+選取文字後，點擊右鍵選擇要查詢的線上字典，就會跳出一個彈窗快速顯示在頁面上。
 
-PS：可點選右上方套件的圖示，設定選單的排序或顯示。
+使用文件：
+https://hackmd.io/@inB0rEOBTayAqTzRfZwWLg/r1sl0BNkR
 
 如果您喜歡這個小工具，歡迎透過以下連結給予我們鼓勵！
 https://www.buymeacoffee.com/Joe.lin 

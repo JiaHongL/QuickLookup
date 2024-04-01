@@ -1,24 +1,33 @@
 # QuickLookup
 
+此工具能夠幫助您快速點擊右鍵，選擇想查詢的線上字典的小工具。
+
 [Chrome 線上應用程式 - QuickLookup](https://chromewebstore.google.com/detail/quick-lookup/fonahidkajbgfhkmencgicnlpnhhcjlb?hl=zh-TW&authuser=0)
 
 ![未命名設計](https://hackmd.io/_uploads/rJEPRHEk0.png)
 
-## 套件介紹
+## 使用介紹
 
-這是一個可以點擊右鍵快速跳轉到相關線上字典的小工具。
-![01](https://hackmd.io/_uploads/B186kDBJA.png)
+點擊右鍵，選擇其中一個線上字典。
+![01](https://hackmd.io/_uploads/Hk0LoTPyA.png)
 
-點擊右上角套件的圖示，可調整順序、啟用、跳轉到設定頁。
-![02](https://hackmd.io/_uploads/S1UT1vSyR.png)
+會跳出一個彈窗，顯示查詢結果。
+![02](https://hackmd.io/_uploads/S1g0Isaw1A.png)
 
-設定頁可以進行新增修改刪除，還要選擇不一樣的主題樣式。
-![03](https://hackmd.io/_uploads/ByLTkDSJA.png)
+按右上角的套件圖示，可調整相關功能，更細節的調整，可點擊齒輪圖示，到設定頁。
+![03](https://hackmd.io/_uploads/SkA8opw1A.png)
 
-![05](https://hackmd.io/_uploads/rk6Pk_ByA.png)
+設定頁可以調整主題樣式、新增/編輯/刪除、顯示排序...等
+![04](https://hackmd.io/_uploads/H1RUspvyA.png)
 
-編輯視窗的畫面
-![04](https://hackmd.io/_uploads/H1IpJvrkA.png)
+另外新增或編輯時，可調整視窗開啟方式、視窗大小...等
+![05](https://hackmd.io/_uploads/SJCUoaDJA.png)
+
+## 贊助作者
+
+如果您覺得這個小工具實用，歡迎請作者喝杯咖啡，感謝您的支持！
+
+<a href="https://www.buymeacoffee.com/Joe.lin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## 版本異動歷程
 
@@ -78,3 +87,10 @@
 通過日期：2024/3/31
 
 - 新增匯出匯出功能
+
+### 0.0.8 版
+
+送審日期：2024/3/31
+通過日期：2024/4/1
+
+- 新增自定義視窗開啟方式與視窗大小
