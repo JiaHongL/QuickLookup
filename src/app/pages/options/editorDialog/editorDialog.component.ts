@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MenuItem } from '../../../models/menu-item.model';
 import Action from './action.emun';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
+import { ThemeService } from '../../../theme.service';
 import { CommonOptionService } from '../../../service/common-option.service';
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -126,7 +127,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
       </div>
 
       <div class="flex justify-content-center align-items-center gap-2 mt-2 relative">
-        <p-button 
+        <p-button
+          [outlined]="isDarkMode()" 
           [disabled]="
             !!name.invalid || 
             !!url.invalid ||
@@ -137,9 +139,20 @@ import { InputNumberModule } from 'primeng/inputnumber';
           [label]="'common_dialog_send'|i18n" 
           (click)="send()"
         ></p-button>
-        <p-button [label]="'common_dialog_cancel'|i18n" severity="warning" (click)="cancel()"></p-button>
+        <p-button 
+          [outlined]="isDarkMode()"
+          [label]="'common_dialog_cancel'|i18n" 
+          severity="warning" 
+          (click)="cancel()"
+        ></p-button>
         @if(config.data.action === action.Update) {
-          <p-button [label]="'common_dialog_delete'|i18n" severity="danger" class="absolute right-0" (click)="delete()"></p-button>
+          <p-button 
+            [outlined]="isDarkMode()" 
+            [label]="'common_dialog_delete'|i18n" 
+            severity="danger" 
+            class="absolute right-0" 
+            (click)="delete()"
+          ></p-button>
         }
       </div>
     </div>
@@ -148,6 +161,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorDialogComponent {
+
+  themeService = inject(ThemeService);
+  isDarkMode = computed(() => {
+    return this.themeService.currentDarkMode() === 'y';
+  });
 
   openingMethodOptions = inject(CommonOptionService).openingMethodOptions;
 
