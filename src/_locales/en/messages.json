@@ -99,5 +99,23 @@
   },
   "options_export_settings_button": {
     "message": "Export settings file"
+  },
+  "options_opening_method": {
+    "message": "Opening method"
+  },
+  "options_popup_width": {
+    "message": "Popup width"
+  },
+  "options_popup_height": {
+    "message": "Popup height"
+  },
+  "opening_method_popup": {
+    "message": "Popup"
+  },
+  "opening_method_new_tab": {
+    "message": "New tab"
+  },
+  "opening_method_new_window": {
+    "message": "New window"
   }
 }

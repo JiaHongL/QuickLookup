@@ -99,5 +99,23 @@
   },
   "options_export_settings_button": {
     "message": "匯出設定檔"
+  },
+  "options_opening_method": {
+    "message": "開啟方式"
+  },
+  "options_popup_width": {
+    "message": "彈窗寬度"
+  },
+  "options_popup_height": {
+    "message": "彈窗高度"
+  },
+  "opening_method_popup": {
+    "message": "彈窗"
+  },
+  "opening_method_new_tab": {
+    "message": "新分頁"
+  },
+  "opening_method_new_window": {
+    "message": "新視窗"
   }
 }
