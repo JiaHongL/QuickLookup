@@ -14,7 +14,7 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
     I18nPipe
   ],
   template: `
-    <div class="border-round border-1 surface-border p-4 surface-card" style="width:920px;height:645px;">
+    <div class="border-round border-1 surface-border p-4 surface-card" style="width:1200px;height:645px;">
         <div class="flex justify-content-between align-items-center mb-3">
             <div class="flex align-items-center"> 
               <p-skeleton size="2.5rem" styleClass="mr-2"></p-skeleton>
@@ -29,9 +29,12 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
             <tr>
               <th></th>
               <th>#</th>
-              <th>{{ 'options_title' | i18n }}</th>
+              <th>{{ 'options_name' | i18n }}</th>
               <th>{{ 'options_url' | i18n }}</th>
-              <th>{{ 'options_operate' | i18n }}</th>
+              <th>{{ 'options_opening_method' | i18n }}</th>
+              <th>{{ 'options_popup_width' | i18n }}</th>
+              <th>{{ 'options_popup_height' | i18n }}</th>
+              <th class="text-center">{{ 'options_operate' | i18n }}</th>
               <th>{{ 'options_enable' | i18n }}</th>
             </tr>
           </ng-template>
@@ -41,9 +44,14 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
                   <td><p-skeleton  width="2rem"></p-skeleton></td>
                   <td><p-skeleton  width="9rem"></p-skeleton></td>
                   <td><p-skeleton width="29rem"></p-skeleton></td>
-                  <td class="flex">
-                    <p-skeleton size="2rem" styleClass="mr-2"></p-skeleton>
-                    <p-skeleton size="2rem" styleClass="mr-2"></p-skeleton>
+                  <td class="text-center"><p-skeleton width="3rem"></p-skeleton></td>
+                  <td class="text-center"><p-skeleton width="3rem"></p-skeleton></td>
+                  <td class="text-center"><p-skeleton width="3rem"></p-skeleton></td>
+                  <td>
+                    <div class="flex">
+                      <p-skeleton size="2rem" styleClass="mr-2"></p-skeleton>
+                      <p-skeleton size="2rem" styleClass="mr-2"></p-skeleton>
+                    </div>
                   </td>
                   <td><p-skeleton width="2rem"></p-skeleton></td>
               </tr>
