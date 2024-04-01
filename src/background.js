@@ -3,13 +3,12 @@ let reconnectAttempts = 0; // 追蹤目前的重連次數
 
 if (ENABLE_LIVE_RELOAD) {
 
-  function connectWebSocket() {
+  const connectWebSocket = () => {
     const socket = new WebSocket("ws://localhost:8080");
 
     socket.onopen = function (event) {
       console.log("Connected to WebSocket server.");
       reconnectAttempts = 0; // 重連成功時重設重連次數
-      isConnecting = false;
     };
 
     socket.onmessage = function (event) {
@@ -21,7 +20,7 @@ if (ENABLE_LIVE_RELOAD) {
     };
 
     socket.onerror = function (error) {
-      console.log("WebSocket error: " + error.message);
+      console.log("WebSocket error: " + error);
     };
 
     socket.onclose = function (event) {
@@ -62,6 +61,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id: "cambridgeDictionaryEn",
@@ -70,6 +72,42 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
+  },
+  {
+    id: "googleTranslate",
+    name: "Google Translate",
+    url: "https://translate.google.com/?sl=auto&tl=zh-TW&text=",
+    title: "Search '%s' in",
+    contexts: ["selection"],
+    visible: true,
+    openingMethod: 'popup',
+    width: 1000,
+    height: 600,
+  },
+  {
+    id: "voiceTube",
+    name: "VoiceTube",
+    url: "https://tw.voicetube.com/definition/",
+    title: "Search '%s' in",
+    contexts: ["selection"],
+    visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
+  },
+  {
+    id: "vocabulary",
+    name: "Vocabulary",
+    url: "https://www.vocabulary.com/dictionary/",
+    title: "Search '%s' in",
+    contexts: ["selection"],
+    visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id:"merriamWebsterDictionary",
@@ -78,6 +116,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id:"longmanDictionary",
@@ -86,6 +127,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id: "collinsDictionary",
@@ -94,6 +138,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id:"oxfordDictionary",
@@ -102,6 +149,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id: "yahooDictionary",
@@ -110,6 +160,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
   {
     id: "youGlish",
@@ -118,6 +171,9 @@ let contextMenuItems = [
     title: "Search '%s' in",
     contexts: ["selection"],
     visible: true,
+    openingMethod: 'popup',
+    width: 800,
+    height: 600,
   },
 ];
 
@@ -147,14 +203,64 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const url = contextMenuItems.find((item) => item.id === info.menuItemId)?.url;
+  const findItem = contextMenuItems.find((item) => item.id === info.menuItemId);
+  const url = findItem?.url;
+  const openingMethod = findItem?.openingMethod || 'popup';
+  const defaultWidth = findItem?.width || 800;
+  const defaultHeight = findItem?.height || 600;
   if (
     url &&
     info.selectionText
   ) {
-    chrome.tabs.create({
-      url: url + encodeURIComponent(info.selectionText)
-    });
+    const redirectUrl = url + encodeURIComponent(info.selectionText);
+    switch (openingMethod) {
+      case 'tab':
+        chrome.tabs.create({
+          url: redirectUrl
+        });
+        break;
+      case 'window':
+        chrome.windows.create({
+          url: redirectUrl
+        });
+        break;
+      default:
+      case 'popup':
+        chrome.windows.getCurrent(function(currentWindow) {
+          // 獲取當前窗口的尺寸和位置
+          const currentWidth = currentWindow.width || 800;
+          const currentHeight = currentWindow.height || 600;
+          const currentLeft = currentWindow.left || 0;
+          const currentTop = currentWindow.top || 0;
+
+          // 定義新窗口的尺寸 
+          let newWidth = defaultWidth > currentWidth ? currentWidth - 150 : defaultWidth;
+          let newHeight = defaultHeight > currentHeight ? currentHeight - 150 : defaultHeight;
+
+          if (newWidth < 150) {
+            newWidth = 150;
+          }
+
+          if (newHeight < 150) {
+            newHeight = 150;
+          }
+        
+          // 計算新窗口在屏幕正中間打開的left和top值
+          const left = Math.round(currentLeft + (currentWidth - newWidth) / 2);
+          const top = Math.round(currentTop + (currentHeight - newHeight) / 2);
+        
+          // 創建新窗口
+          chrome.windows.create({
+            url: redirectUrl,
+            type: 'panel',
+            width: newWidth,
+            height: newHeight,
+            left: left,
+            top: top
+          });
+        });
+        break;
+    }
   }
 });
 

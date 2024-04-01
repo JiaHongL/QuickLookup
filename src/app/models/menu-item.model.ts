@@ -5,4 +5,7 @@ export interface MenuItem {
     url: string,
     contexts: string[],
     visible: boolean,
+    openingMethod: string,
+    width: number,
+    height: number,
 }

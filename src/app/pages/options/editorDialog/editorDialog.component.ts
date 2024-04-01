@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MenuItem } from '../../../models/menu-item.model';
 import Action from './action.emun';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
+import { CommonOptionService } from '../../../service/common-option.service';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService } from 'primeng/api';
 import { AutoFocusModule } from 'primeng/autofocus';
-
 import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
-
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-editor-dialog',
@@ -25,7 +27,9 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
     InputSwitchModule,
     ButtonModule,
     AutoFocusModule,
-    I18nPipe
+    I18nPipe,
+    InputNumberModule,
+    DropdownModule,
   ],
   providers:[I18nPipe],
   template: `
@@ -60,6 +64,60 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
         class="w-full mb-1 mb-3 mt-1"
       >
 
+      <div class="flex mb-3 gap-2" >
+        <div>
+          <label for="openingMethod" class="text-900 font-medium">
+              {{ 'options_opening_method' | i18n }}
+          </label>
+          <div>
+            <p-dropdown 
+              #openingMethod="ngModel" 
+              id="openingMethod" 
+              [required]="true" 
+              [style]="{width:'150px'}" 
+              appendTo="body" 
+              [options]="openingMethodOptions" 
+              [(ngModel)]="data.openingMethod" 
+              optionLabel="name" 
+              optionValue="code" 
+              [showClear]="false" 
+              placeholder="Select..."
+            ></p-dropdown>
+          </div>
+        </div>
+        <div>
+          <label for="width" class="text-900 font-medium">
+            {{ 'options_popup_width' | i18n }}
+          </label>
+          <div>
+            <p-inputNumber 
+              #width="ngModel" 
+              id="width"
+              [required]="true"  
+              [(ngModel)]="data.width" 
+              [useGrouping]="false"
+              [disabled]="openingMethod.value !== 'popup'"
+            ></p-inputNumber>
+          </div>
+        </div>
+        <div>
+          <label for="height" class="text-900 font-medium mb-2">
+            {{ 'options_popup_height' | i18n }}
+          </label>
+          <div>
+            <p-inputNumber 
+              #height="ngModel" 
+              id="height" 
+              [required]="true" 
+              [(ngModel)]="data.height" 
+              [useGrouping]="false"
+              [disabled]="openingMethod.value !== 'popup'"
+            ></p-inputNumber>
+          </div>
+        </div>
+
+      </div>
+
       <div class="flex align-items-center">
         <label for="enable" class="text-900 font-medium mb-2 mr-2">
           {{ 'options_enable' | i18n }}
@@ -68,7 +126,17 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
       </div>
 
       <div class="flex justify-content-center align-items-center gap-2 mt-2 relative">
-        <p-button [disabled]="!!name.invalid || !!url.invalid" [label]="'common_dialog_send'|i18n" (click)="send()"></p-button>
+        <p-button 
+          [disabled]="
+            !!name.invalid || 
+            !!url.invalid ||
+            !!openingMethod.invalid ||
+            !!width.invalid ||
+            !!height.invalid
+          " 
+          [label]="'common_dialog_send'|i18n" 
+          (click)="send()"
+        ></p-button>
         <p-button [label]="'common_dialog_cancel'|i18n" severity="warning" (click)="cancel()"></p-button>
         @if(config.data.action === action.Update) {
           <p-button [label]="'common_dialog_delete'|i18n" severity="danger" class="absolute right-0" (click)="delete()"></p-button>
@@ -80,6 +148,9 @@ import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorDialogComponent {
+
+  openingMethodOptions = inject(CommonOptionService).openingMethodOptions;
+
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   data = this.config.data.data as MenuItem;

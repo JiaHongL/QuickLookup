@@ -24,7 +24,7 @@ import { SwitchModeDarkButtonComponent } from '../../shared/components/switch-mo
 import { SkeletonComponent } from './skeleton/skeleton.component';
 import { I18nPipe } from '../../shared/pipes/i18n.pipe';
 import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/buy-me-a-coffee.component';
-
+import { OpeningMethodPipe } from '../../shared/pipes/opening-method.pipe';
 
 @Component({
   selector: 'app-options',
@@ -42,7 +42,8 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
       DragDropModule,
       SkeletonComponent,
       I18nPipe,
-      BuyMeACoffeeComponent
+      BuyMeACoffeeComponent,
+      OpeningMethodPipe
   ],
   providers: [
     DialogService,
@@ -60,7 +61,7 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
           <ng-template pTemplate="header">
             <app-switch-mode-dark-button></app-switch-mode-dark-button>
             <p-dropdown
-              class="ml-2"
+              class="ml-2 mr-2"
               [options]="themeService.themeGroup" 
               [(ngModel)]="currentTheme"
               (ngModelChange)="themeService.switchTheme(currentTheme)"  
@@ -101,9 +102,12 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
                 <tr>
                     <th></th>
                     <th>#</th>
-                    <th>{{ 'options_title' | i18n }}</th>
+                    <th>{{ 'options_name' | i18n }}</th>
                     <th>{{ 'options_url' | i18n }}</th>
-                    <th>{{ 'options_operate' | i18n }}</th>
+                    <th>{{ 'options_opening_method' | i18n }}</th>
+                    <th>{{ 'options_popup_width' | i18n }}</th>
+                    <th>{{ 'options_popup_height' | i18n }}</th>
+                    <th class="text-center">{{ 'options_operate' | i18n }}</th>
                     <th>{{ 'options_enable' | i18n }}</th>
                 </tr>
             </ng-template>
@@ -120,6 +124,9 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
                     <td>{{ index + 1}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.url }}</td>
+                    <td class="text-center">{{ item.openingMethod | openingMethod }}</td>
+                    <td class="text-center">{{ item.width }}</td>
+                    <td class="text-center">{{ item.height }}</td>
                     <td>
                       <p-button
                         [outlined]="isDarkMode()" 
@@ -169,7 +176,7 @@ import { BuyMeACoffeeComponent } from '../../shared/components/buy-me-a-coffee/b
                       severity="warning" 
                       (click)="importFileInput.click()"
                     ></p-button>
-                    <input #importFileInput type="file" (change)="importSettings($event)" hidden/>
+                    <input #importFileInput type="file" (change)="importSettings($event)" accept=".json" hidden/>
                 </div>
                 <span class="p-text-secondary"> {{ 'options_enabled' | i18n }} / {{ 'options_total' | i18n }}： {{enableCount()}} / {{dictionaryList().length}}</span>
                 <div class="flex justify-content-center absolute" style="right:-14px;bottom:-62px">
@@ -224,6 +231,17 @@ export class OptionsComponent {
     effect(async () => {
       const storage = await chrome.storage.local.get(['dictionaryList']);
       const dictionaryList = storage['dictionaryList'] as MenuItem[];
+      dictionaryList.forEach((data) => {
+        if(!data.hasOwnProperty('openingMethod')){
+          data.openingMethod = 'popup';
+        }
+        if(!data.hasOwnProperty('width')){
+          data.width = 800;
+        }
+        if(!data.hasOwnProperty('height')){
+          data.height = 600;
+        }
+      });
       this.dictionaryList.set(dictionaryList);
       this.initializeUpdateEffect();
     });
@@ -234,7 +252,7 @@ export class OptionsComponent {
 
   initializeUpdateEffect() {
     effect(() => {
-      const updateDictionaryList = this.dictionaryList();
+      const updateDictionaryList = this.dictionaryList() || [];
       if (this.isFirstTimeTriggered) {
         this.isFirstTimeTriggered = false;
         return;
@@ -261,6 +279,9 @@ export class OptionsComponent {
         title: "Search '%s' in",
         contexts: ["selection"],
         visible: true,
+        openingMethod: 'popup',
+        width: 800,
+        height: 600,
       }
     };
 
@@ -381,7 +402,10 @@ export class OptionsComponent {
       return {
         name: item.name,
         url: item.url,
-        visible: item.visible
+        visible: item.visible,
+        openingMethod: item?.openingMethod || 'popup',
+        width: item?.width || 800,
+        height: item?.height || 600,
       }
     })
 
@@ -440,6 +464,9 @@ export class OptionsComponent {
                   title: "Search '%s' in",
                   contexts: ["selection"],
                   visible: item.visible,
+                  openingMethod: item.openingMethod,
+                  width: item.width,
+                  height: item.height
                 }
               });
               this.dictionaryList.set(newSettings);
@@ -463,6 +490,11 @@ export class OptionsComponent {
           this.importFileInput().nativeElement.value = '';
         }
       } catch (error) {
+        this.messageService.add({
+          severity:'error', 
+          summary: this.i18n.transform('common_operate_failed'),
+          detail: this.i18n.transform('options_file_error_please_check')
+        });
         this.importFileInput().nativeElement.value = '';
         console.error(error);
       }
@@ -471,9 +503,9 @@ export class OptionsComponent {
   }
 
   checkJson(json:any){
-    // 判斷是否有 settings & settings 是否為陣列 & settings 是否有 name, url, visible & visible 是否為 boolean & name, url 是否為字串
-    return json.settings && Array.isArray(json.settings) && json.settings.every((item:any) => {
-      return item.name && item.url && item.visible !== undefined && typeof item.visible === 'boolean' && typeof item.name === 'string' && typeof item.url === 'string';
+    // 判斷是否有 settings & settings 是否為陣列 & settings 是否有 name, url, visible, openingMethod, width, height & visible 是否為 boolean & openingMethod, name, url 是否為字串,  & width, height 是否為數字
+    return json.hasOwnProperty('settings') && Array.isArray(json.settings) && json.settings.every((item:any) => {
+      return item.hasOwnProperty('name') && item.hasOwnProperty('url') && item.hasOwnProperty('visible') && item.hasOwnProperty('openingMethod') && item.hasOwnProperty('width') && item.hasOwnProperty('height') && typeof item.visible === 'boolean' && typeof item.openingMethod === 'string' && typeof item.name === 'string' && typeof item.url === 'string' && typeof item.width === 'number' && typeof item.height === 'number';
     });
   }
 
