@@ -3,23 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm-run-all build:dev copy-all:dev watch-extension",
+    "start": "npm-run-all build:dev webpack:build watch-extension",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "watch-extension": "node extension-watcher.js",
+    "webpack:build": "webpack --config extra-webpack.config.js --env enableLiveReload=true",
+    "webpack:build:prod": "webpack --config extra-webpack.config.js --env enableLiveReload=false",
     "build:dev": "ng build --configuration development",
     "build:prod": "ng build",
-    "copy-locales": "node copy-locales.js",
-    "copy-iframe": "node copy-iframe.js",
-    "copy-background:dev": "node copy-background.js dev",
-    "copy-background:prod": "node copy-background.js prod",
-    "copy-all:dev": "npm-run-all copy-background:dev copy-content-script:dev copy-locales copy-iframe",
-    "copy-content-script:dev": "node copy-content-script.js dev",
-    "copy-content-script:prod": "node copy-content-script.js prod",
-    "copy-all:prod": "npm-run-all copy-background:prod copy-content-script:prod copy-locales copy-iframe",
     "zip-extension": "node zip-extension.js",
-    "build:extension": "npm-run-all build:prod copy-all:prod zip-extension"
+    "build:extension": "npm-run-all build:prod webpack:build:prod zip-extension"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +27,7 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@types/chrome": "^0.0.263",
+    "copy-webpack-plugin": "^12.0.2",
     "ngx-chrome-extension-live-reload": "^0.0.7",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
@@ -55,6 +50,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "~5.4.2"
+    "ts-loader": "^9.5.1",
+    "typescript": "~5.4.2",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }

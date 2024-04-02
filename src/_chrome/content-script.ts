@@ -1,5 +1,5 @@
 try {
-  const injectDOMElement = (tagName, targetElement, options = {}) => {
+  const injectDOMElement = (tagName:any, targetElement:any, options = {}) => {
     const element = document.createElement(tagName);
     Object.entries(options).forEach(([optionKey, optionValue]) => {
       element[optionKey] = optionValue;
@@ -34,7 +34,7 @@ try {
   console.log("error", error);
 }
 
-if (ENABLE_LIVE_RELOAD) {
+if (process.env['ENABLE_LIVE_RELOAD']) {
   // 定時戳一下，讓背景程式不要進入睡眠狀態
   setInterval(function(){
     try {

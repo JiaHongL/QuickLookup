@@ -1,7 +1,9 @@
+import { ContextMenuItems } from "../app/const/context-menu-items.const";
+
 const MAX_RECONNECT_ATTEMPTS = 60; // 定義最大重連次數
 let reconnectAttempts = 0; // 追蹤目前的重連次數
 
-if (ENABLE_LIVE_RELOAD) {
+if (process.env['ENABLE_LIVE_RELOAD']) {
 
   const connectWebSocket = () => {
     const socket = new WebSocket("ws://localhost:8080");
@@ -53,162 +55,18 @@ if (ENABLE_LIVE_RELOAD) {
   console.log("Live reload is disabled");
 }
 
-let contextMenuItems = [
-  {
-    id: "cambridgeDictionary",
-    name: "Cambridge Dictionary",
-    url: "https://dictionary.cambridge.org/dictionary/english-chinese-traditional/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "cambridgeDictionaryEn",
-    name: "Cambridge Dictionary (English)",
-    url: "https://dictionary.cambridge.org/dictionary/english/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "googleTranslate",
-    name: "Google Translate",
-    url: "https://translate.google.com/?sl=auto&tl=zh-TW&text=",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 1000,
-    height: 600,
-  },
-  {
-    id: "deepl",
-    name: "Deepl",
-    url: "https://www.deepl.com/translator#en/zh/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 1000,
-    height: 600,
-  },
-  {
-    id:"forvo",
-    name: "Forvo",
-    url: "https://forvo.com/search/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "voiceTube",
-    name: "VoiceTube",
-    url: "https://tw.voicetube.com/definition/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "vocabulary",
-    name: "Vocabulary",
-    url: "https://www.vocabulary.com/dictionary/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id:"merriamWebsterDictionary",
-    name: "Merriam Webster Dictionary",
-    url: "https://www.merriam-webster.com/dictionary/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id:"longmanDictionary",
-    name: "Longman Dictionary Dictionary",
-    url: "https://www.ldoceonline.com/dictionary/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "collinsDictionary",
-    name: "Collins Dictionary",
-    url: "https://www.collinsdictionary.com/dictionary/english/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id:"oxfordDictionary",
-    name: "Oxford Dictionary",
-    url: "https://www.oxfordlearnersdictionaries.com/definition/english/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "yahooDictionary",
-    name: "Yahoo Dictionary",
-    url: "https://tw.dictionary.search.yahoo.com/search?p=",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-  {
-    id: "youGlish",
-    name: "YouGlish",
-    url: "https://youglish.com/search/",
-    title: "Search '%s' in",
-    contexts: ["selection"],
-    visible: true,
-    openingMethod: 'popup',
-    width: 800,
-    height: 600,
-  },
-];
+let contextMenuItems = ContextMenuItems;
 
 chrome.runtime.onInstalled.addListener(() => {
 
   chrome.storage.local.get(['dictionaryList'], function(result) {
     if (
-      !result?.dictionaryList ||
-      result?.dictionaryList?.length === 0
+      !result?.["dictionaryList"] ||
+      result?.["dictionaryList"]?.length === 0
     ) {
       chrome.storage.local.set({dictionaryList: contextMenuItems});
     }else{
-      contextMenuItems = result.dictionaryList;
+      contextMenuItems = result["dictionaryList"];
     }
     contextMenuItems.forEach((data) => {
       if (data.visible){
@@ -216,7 +74,7 @@ chrome.runtime.onInstalled.addListener(() => {
           id: data.id,
           title: data.title + ' ' + data.name,
           contexts: data.contexts,
-        }
+        } as chrome.contextMenus.CreateProperties;
         chrome.contextMenus.create(item);
       }
     });
@@ -242,13 +100,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         });
         break;
       case 'window':
-        chrome.windows.create({
+        (chrome.windows as any).create({
           url: redirectUrl
         });
         break;
       default:
       case 'popup':
-        chrome.windows.getCurrent(function(currentWindow) {
+        (chrome.windows as any).getCurrent(function(currentWindow: chrome.windows.Window) {
           // 獲取當前窗口的尺寸和位置
           const currentWidth = currentWindow.width || 800;
           const currentHeight = currentWindow.height || 600;
@@ -272,7 +130,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           const top = Math.round(currentTop + (currentHeight - newHeight) / 2);
         
           // 創建新窗口
-          chrome.windows.create({
+          (chrome.windows as any).create({
             url: redirectUrl,
             type: 'panel',
             width: newWidth,
@@ -290,7 +148,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request?.action === "updateContextMenu") {
     contextMenuItems = request.data;
     chrome.contextMenus.removeAll(() => {
-      request.data.forEach((data) => {
+      request.data.forEach((data:any) => {
         if (data.visible){
           let item = {
             id: data.id,
