@@ -77,6 +77,30 @@ export  const ContextMenuItems = [
       height: 600,
     },
 
+    // ChatGPT 的自製 GPTs
+    {
+      id: "wordExplorer",
+      name: "Word Explorer GPTs",
+      url: "https://chat.openai.com/g/g-XeTkWy0Bi-word-explorer?q=",
+      title: "Search '%s' in",
+      contexts: ["selection"],
+      visible: true,
+      openingMethod: 'popup',
+      width: 1200,
+      height: 700,
+    },
+    {
+      id:"translationMaster",
+      name: "Translation Master GPTs",
+      url: "https://chat.openai.com/g/g-6KpqlNuJe-translation-master?q=",
+      title: "Search '%s' in",
+      contexts: ["selection"],
+      visible: true,
+      openingMethod: 'popup',
+      width: 1200,
+      height: 700,
+    },
+
     // 整段翻譯
     {
       id: "googleTranslate",
@@ -146,4 +170,6 @@ export  const ContextMenuItems = [
       width: 800,
       height: 600,
     },
+
+
   ];
