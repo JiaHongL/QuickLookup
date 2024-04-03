@@ -26,6 +26,7 @@
 ## 選項介紹
 
 ### 查詢單字
+
 - [Cambridge Dictionary](https://dictionary.cambridge.org/dictionary/english-chinese-traditional/apple)
 - [Cambridge Dictionary (English)](https://dictionary.cambridge.org/dictionary/english/apple) 
 - [Merriam Webster Dictionary](https://www.merriam-webster.com/dictionary/apple)
@@ -33,6 +34,13 @@
 - [Vocabulary](https://www.vocabulary.com/dictionary/apple) 
 - [Longman Dictionary Dictionary](https://www.ldoceonline.com/dictionary/apple) 
 - [Yahoo Dictionary](https://tw.dictionary.search.yahoo.com/search?p=apple) 
+
+### ChatGPT 的 GPTs
+
+- [Word Explorer](https://chat.openai.com/g/g-XeTkWy0Bi-word-explorer) 
+- [Translation Master](https://chat.openai.com/g/g-6KpqlNuJe-translation-master)
+
+> 需要有訂閱 ChatGPT Plus 才能使用。
 
 ### 整段翻譯
 
