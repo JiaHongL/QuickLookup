@@ -59,7 +59,7 @@
 複製 GPTs 的網址列
 ![image](https://hackmd.io/_uploads/HJMK-T5kA.png)
 
-到設定頁點擊新增按鈕，記得網址的最後面加上**?q=**，建立成功後即可使用。
+到設定頁點擊新增按鈕，記得網址的最後面加上 **?q=**，建立成功後即可使用。
 ![image](https://hackmd.io/_uploads/S1aA-65k0.png)
 
 ## 贊助作者
