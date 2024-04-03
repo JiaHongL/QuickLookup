@@ -14,7 +14,7 @@
 會跳出一個彈窗，顯示查詢結果。
 ![02](https://hackmd.io/_uploads/S1g0Isaw1A.png)
 
-按右上角的套件圖示，可調整相關功能，更細節的調整，可點擊齒輪圖示，到設定頁。
+按右上角的套件圖示，可調整排序和啟用功能，更細節的調整，可點擊齒輪圖示到設定頁。
 ![03](https://hackmd.io/_uploads/SkA8opw1A.png)
 
 設定頁可以調整主題樣式、新增/編輯/刪除、顯示排序...等
@@ -53,6 +53,14 @@
 - [VoiceTube](https://tw.voicetube.com/definition/apple) 
 - [Forvo](https://forvo.com/search/apple) 
 - [YouGlish](https://youglish.com/search/apple) 
+
+## 新增自己的 GPTs 查詢
+
+複製 GPTs 的網址列
+![image](https://hackmd.io/_uploads/HJMK-T5kA.png)
+
+到設定頁點擊新增按鈕，記得網址的最後面加上**?q=**，建立成功後即可使用。
+![image](https://hackmd.io/_uploads/S1aA-65k0.png)
 
 ## 贊助作者
 
@@ -143,7 +151,7 @@
 
 ### 0.1.1 版
 
-送審日期：2024/4/3
+送審日期：2024/4/3  
 通過日期：2024/4/3  
 
 - 增加 GPTs 查詢選項
