@@ -1,4 +1,4 @@
-import { ThemeService } from './../../../theme.service';
+import { ThemeService } from '../../../service/theme.service';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
@@ -35,6 +35,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 export class BuyMeACoffeeComponent {
   themeService = inject(ThemeService);
   isDarkMode = computed(() => {
+    console.log(this.themeService.currentDarkMode());
     return this.themeService.currentDarkMode()=== 'y';
   });
   timestamp = new Date().getTime();

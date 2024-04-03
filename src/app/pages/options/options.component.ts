@@ -7,7 +7,7 @@ import { MenuItem } from '../../models/menu-item.model';
 import Action from './editorDialog/action.emun';
 import { ContextMenuItems } from '../../const/context-menu-items.const';
 
-import { ThemeService } from '../../theme.service';
+import { ThemeService } from '../../service/theme.service';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';

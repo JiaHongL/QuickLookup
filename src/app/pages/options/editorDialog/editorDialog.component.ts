@@ -6,7 +6,7 @@ import { MenuItem } from '../../../models/menu-item.model';
 import Action from './action.emun';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-import { ThemeService } from '../../../theme.service';
+import { ThemeService } from '../../../service/theme.service';
 import { CommonOptionService } from '../../../service/common-option.service';
 
 import { InputTextModule } from 'primeng/inputtext';
