@@ -82,14 +82,41 @@ const initContextMenuItem = () => {
   });
 };
 
+/** chrome 安裝時或更新完成 */
+chrome.runtime.onInstalled.addListener((details) => {
+  initContextMenuItem();
+});
+
 /** chrome 重啟時初始化 */
 chrome.runtime.onStartup.addListener(() => {
   initContextMenuItem();
 });
 
-/** chrome 安裝時或更新時初始化 */
-chrome.runtime.onInstalled.addListener(() => {
-  initContextMenuItem();
+/** chrome 通知有新版本可用時重新加載 */
+chrome.runtime.onUpdateAvailable.addListener(() => {
+  chrome.runtime.reload();
+});
+
+/** 監聽 storage 變化 */
+chrome.storage.local.onChanged.addListener((changes) => {
+  for (var key in changes) {
+    const storageChange = changes[key];
+    if(key === 'dictionaryList') {
+      contextMenuItems = storageChange.newValue || [];
+      chrome.contextMenus.removeAll(() => {
+        contextMenuItems.forEach((data: any) => {
+          if (data.visible) {
+            let item = {
+              id: data.id,
+              title: data.title + ' ' + data.name,
+              contexts: data.contexts,
+            }
+            chrome.contextMenus.create(item);
+          }
+        });
+      });
+    }
+  } 
 });
 
 /** 點擊右鍵選單時觸發 */
@@ -117,7 +144,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         break;
       default:
       case 'popup':
-        (chrome.windows as any).getCurrent(function (currentWindow: chrome.windows.Window) {
+        (chrome.windows as any).getCurrent((currentWindow: chrome.windows.Window) => {
           // 獲取當前窗口的尺寸和位置
           const currentWidth = currentWindow.width || 800;
           const currentHeight = currentWindow.height || 600;
@@ -156,22 +183,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 /** 接收來自 popup.htm、options.html 的訊息 */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse)=> {
-  if (request?.action === "updateContextMenu") {
-    contextMenuItems = request.data;
-    chrome.contextMenus.removeAll(() => {
-      request.data.forEach((data: any) => {
-        if (data.visible) {
-          let item = {
-            id: data.id,
-            title: data.title + ' ' + data.name,
-            contexts: data.contexts,
-          }
-          chrome.contextMenus.create(item);
-        }
-      });
-    });
-  }
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (
     request?.action === "updateTheme" &&
     request?.data &&

@@ -266,10 +266,6 @@ export class OptionsComponent {
         return;
       }
       chrome.storage.local.set({ dictionaryList: updateDictionaryList });
-      chrome.runtime.sendMessage({
-        action: "updateContextMenu",
-        data: updateDictionaryList
-      });
     }, { 
       injector: this.injector 
     });
