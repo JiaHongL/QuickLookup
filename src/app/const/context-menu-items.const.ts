@@ -102,7 +102,7 @@ export  const ContextMenuItems = [
     },
     {
       id: "letterReplyAssistant",
-      name: "letter Reply Assistant GPT",
+      name: "Letter Reply Assistant GPT",
       url: "https://chat.openai.com/g/g-QqRVKynIZ-letter-reply-assistant?q=",
       title: "Search '%s' in",
       contexts: ["selection"],
