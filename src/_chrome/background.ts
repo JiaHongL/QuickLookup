@@ -57,31 +57,42 @@ if (process.env['ENABLE_LIVE_RELOAD']) {
 
 let contextMenuItems = ContextMenuItems;
 
-chrome.runtime.onInstalled.addListener(() => {
-
-  chrome.storage.local.get(['dictionaryList'], function(result) {
+const initContextMenuItem = () => {
+  chrome.storage.local.get(['dictionaryList'], (result) => {
     if (
       !result?.["dictionaryList"] ||
       result?.["dictionaryList"]?.length === 0
     ) {
-      chrome.storage.local.set({dictionaryList: contextMenuItems});
-    }else{
+      chrome.storage.local.set({ dictionaryList: contextMenuItems });
+    } else {
       contextMenuItems = result["dictionaryList"];
     }
-    contextMenuItems.forEach((data) => {
-      if (data.visible){
-        let item = {
-          id: data.id,
-          title: data.title + ' ' + data.name,
-          contexts: data.contexts,
-        } as chrome.contextMenus.CreateProperties;
-        chrome.contextMenus.create(item);
-      }
+    chrome.contextMenus.removeAll(() => {
+      contextMenuItems.forEach((data) => {
+        if (data.visible) {
+          let item = {
+            id: data.id,
+            title: data.title + ' ' + data.name,
+            contexts: data.contexts,
+          } as chrome.contextMenus.CreateProperties;
+          chrome.contextMenus.create(item);
+        }
+      });
     });
   });
+};
 
+/** chrome 重啟時初始化 */
+chrome.runtime.onStartup.addListener(() => {
+  initContextMenuItem();
 });
 
+/** chrome 安裝時或更新時初始化 */
+chrome.runtime.onInstalled.addListener(() => {
+  initContextMenuItem();
+});
+
+/** 點擊右鍵選單時觸發 */
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const findItem = contextMenuItems.find((item) => item.id === info.menuItemId);
   const url = findItem?.url;
@@ -106,7 +117,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         break;
       default:
       case 'popup':
-        (chrome.windows as any).getCurrent(function(currentWindow: chrome.windows.Window) {
+        (chrome.windows as any).getCurrent(function (currentWindow: chrome.windows.Window) {
           // 獲取當前窗口的尺寸和位置
           const currentWidth = currentWindow.width || 800;
           const currentHeight = currentWindow.height || 600;
@@ -124,11 +135,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           if (newHeight < 150) {
             newHeight = 150;
           }
-        
+
           // 計算新窗口在屏幕正中間打開的left和top值
           const left = Math.round(currentLeft + (currentWidth - newWidth) / 2);
           const top = Math.round(currentTop + (currentHeight - newHeight) / 2);
-        
+
           // 創建新窗口
           (chrome.windows as any).create({
             url: redirectUrl,
@@ -144,12 +155,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+/** 接收來自 popup.htm、options.html 的訊息 */
+chrome.runtime.onMessage.addListener((request, sender, sendResponse)=> {
   if (request?.action === "updateContextMenu") {
     contextMenuItems = request.data;
     chrome.contextMenus.removeAll(() => {
-      request.data.forEach((data:any) => {
-        if (data.visible){
+      request.data.forEach((data: any) => {
+        if (data.visible) {
           let item = {
             id: data.id,
             title: data.title + ' ' + data.name,
@@ -160,7 +172,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       });
     });
   }
-  if(
+  if (
     request?.action === "updateTheme" &&
     request?.data &&
     request?.data?.theme &&
