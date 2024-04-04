@@ -122,8 +122,16 @@ import { OpeningMethodPipe } from '../../shared/pipes/opening-method.pipe';
                         ></span>
                     </td>
                     <td>{{ index + 1}}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.url }}</td>
+                    <td>
+                      <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" style="max-width:200px">
+                        {{ item.name }}
+                      </div>
+                    </td>
+                    <td>
+                        <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" style="max-width:500px">
+                          {{ item.url }}
+                        </div>
+                    </td>
                     <td class="text-center">{{ item.openingMethod | openingMethod }}</td>
                     <td class="text-center">{{ item.width }}</td>
                     <td class="text-center">{{ item.height }}</td>

@@ -17,6 +17,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { I18nPipe } from '../../../shared/pipes/i18n.pipe';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-editor-dialog',
@@ -31,6 +32,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     I18nPipe,
     InputNumberModule,
     DropdownModule,
+    InputTextareaModule
   ],
   providers:[I18nPipe],
   template: `
@@ -54,16 +56,17 @@ import { InputNumberModule } from 'primeng/inputnumber';
       <label for="url" class="text-900 font-medium mb-2">
         {{ 'options_url' | i18n }}
       </label>
-      <input
+      <textarea
+        id="url"   
         #url="ngModel"
+        pInputTextarea 
+        [(ngModel)]="data.url"
         required
-        [(ngModel)]="data.url" 
-        id="url" 
-        type="text" 
-        [placeholder]="'options_url'|i18n" 
-        pInputText 
         class="w-full mb-1 mb-3 mt-1"
-      >
+        rows="5" 
+        cols="30"
+        [placeholder]="'options_url'|i18n" 
+      ></textarea>
 
       <div class="flex mb-3 gap-2" >
         <div>
