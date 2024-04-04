@@ -2,6 +2,39 @@
 選取文字後，點擊右鍵選擇要查詢的線上字典，就會跳出一個彈窗快速顯示在頁面上，此外，也可以結合 ChatGPT 的 GPTs 搭配出其他應用！
 PS：若使用 GPTs，需訂閱 ChatGPT Plus。
 
+預設選項如下：
+
+ChatGPT3.5 提問
+- Word Explorer ChatGPT 3.5
+
+查詢單字
+- Cambridge Dictionary
+- Cambridge Dictionary (English)
+- Merriam Webster Dictionary
+- Oxford Dictionary
+- Vocabulary
+- Longman Dictionary Dictionary
+- Yahoo Dictionary
+
+ChatGPT 的 GPTs
+- Word Explorer
+- Translation Master
+PS：需要有訂閱 ChatGPT Plus 才能使用。
+
+回覆信件的 GPT
+- Letter Reply Assistant
+PS：需要有訂閱 ChatGPT Plus 才能使用。
+
+整段翻譯
+- Google Translate
+- Deepl
+
+有單字發音的影片或音檔
+- Collins Dictionary
+- VoiceTube
+- Forvo
+- YouGlish
+
 使用文件：
 https://hackmd.io/@inB0rEOBTayAqTzRfZwWLg/r1sl0BNkR
 

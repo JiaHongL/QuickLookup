@@ -25,6 +25,10 @@
 
 ## 選項介紹
 
+### ChatGPT3.5 提問
+
+- ChatGPT 3.5 (https://chat.openai.com/?q=請幫我解釋以下這個英文單字的詞義、詞性、拼英 (使用美式發音 的 kk 音標)、音節 (顯示切分方式)，並給出五個句子 (英中對照)，)
+
 ### 查詢單字
 
 - [Cambridge Dictionary](https://dictionary.cambridge.org/dictionary/english-chinese-traditional/apple)
@@ -184,3 +188,12 @@
 通過日期：2024/4/5  
 
 - 修正選項名稱
+
+### 0.1.4 版
+
+送審日期：2024/4/6  
+通過日期：2024/4/7  
+
+- 增加 GPT3.5 的選項
+- url 從 input 改為 textarea
+- table 文字過長時，顯示...
