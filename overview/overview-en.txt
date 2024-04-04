@@ -1,6 +1,6 @@
 Usage instructions: Select text on a webpage, right-click, and choose the online dictionary you want to search. In addition, you can also combine ChatGPT with GPTs to create other applications!
 
-PS: You can click the icon of the extension on the top right to adjust the menu's order or display.
+PS: Subscribing to ChatGPT Plus is required to use GPTs."
 
 If you like this tool, please encourage us through the following link:
 https://www.buymeacoffee.com/Joe.lin
