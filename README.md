@@ -1,6 +1,6 @@
 # QuickLookup
 
-此工具能夠幫助您快速點擊右鍵，選擇想查詢的線上字典的小工具。
+此工具能夠幫助您快速點擊右鍵，選擇想查詢的線上字典的小工具，也可以結合 ChatGPT 的 GPTs 搭配出其他應用！
 
 [Chrome 線上應用程式 - QuickLookup](https://chromewebstore.google.com/detail/quick-lookup/fonahidkajbgfhkmencgicnlpnhhcjlb?hl=zh-TW&authuser=0)
 
@@ -42,6 +42,10 @@
 
 > 需要有訂閱 ChatGPT Plus 才能使用。
 
+### 回覆信件的 GPT
+- [Letter Reply Assistant](https://chat.openai.com/g/g-QqRVKynIZ-letter-reply-assistant)
+> 需要有訂閱 ChatGPT Plus 才能使用。
+
 ### 整段翻譯
 
 - [Google Translate](https://translate.google.com/?sl=auto&tl=zh-TW&text=apple) 
@@ -52,11 +56,19 @@
 - [Collins Dictionary](https://www.collinsdictionary.com/dictionary/english/apple) 
 - [VoiceTube](https://tw.voicetube.com/definition/apple) 
 - [Forvo](https://forvo.com/search/apple) 
-- [YouGlish](https://youglish.com/search/apple) 
+- [YouGlish](https://youglish.com/search/apple)
 
-## 新增自己的 GPTs 查詢
+## 示範回覆信件的 GPT
 
-複製 GPTs 的網址列
+選取需要回覆的信件內容。
+![image](https://hackmd.io/_uploads/rJpQJasyC.png)
+
+選擇 Letter Reply Assistant，即可得到一個正向與反向的回覆建議。
+![image](https://hackmd.io/_uploads/HyJFJaskA.png)
+
+## 新增自己的 GPT 查詢
+
+複製 GPTs 的網址列。
 ![image](https://hackmd.io/_uploads/HJMK-T5kA.png)
 
 到設定頁點擊新增按鈕，記得網址的最後面加上 **?q=**，建立成功後即可使用。
@@ -155,3 +167,11 @@
 通過日期：2024/4/3  
 
 - 增加 GPTs 查詢選項
+
+### 0.1.2 版
+
+送審日期：2024/4/3  
+通過日期：2024/4/5  
+
+- 修正 chrome 重起時，未抓取 storage 的資料問題
+- 調整 & 選項新增 Letter Reply Assistant
