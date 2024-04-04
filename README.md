@@ -43,7 +43,9 @@
 > 需要有訂閱 ChatGPT Plus 才能使用。
 
 ### 回覆信件的 GPT
+
 - [Letter Reply Assistant](https://chat.openai.com/g/g-QqRVKynIZ-letter-reply-assistant)
+  
 > 需要有訂閱 ChatGPT Plus 才能使用。
 
 ### 整段翻譯

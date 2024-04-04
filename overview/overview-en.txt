@@ -1,4 +1,4 @@
-Usage instructions: Select text on a webpage, right-click, and choose the online dictionary you want to search.
+Usage instructions: Select text on a webpage, right-click, and choose the online dictionary you want to search. In addition, you can also combine ChatGPT with GPTs to create other applications!
 
 PS: You can click the icon of the extension on the top right to adjust the menu's order or display.
 
