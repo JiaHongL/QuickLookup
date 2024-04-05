@@ -55,15 +55,14 @@ if (process.env['ENABLE_LIVE_RELOAD']) {
   console.log("Live reload is disabled");
 }
 
-let contextMenuItems = ContextMenuItems;
-
 const initContextMenuItem = () => {
+  let contextMenuItems = ContextMenuItems;
   chrome.storage.local.get(['dictionaryList'], (result) => {
     if (
       !result?.["dictionaryList"] ||
       result?.["dictionaryList"]?.length === 0
     ) {
-      chrome.storage.local.set({ dictionaryList: contextMenuItems });
+      chrome.storage.local.set({ dictionaryList: ContextMenuItems });
     } else {
       contextMenuItems = result["dictionaryList"];
     }
@@ -99,6 +98,7 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 
 /** 監聽 storage 變化 */
 chrome.storage.local.onChanged.addListener((changes) => {
+  let contextMenuItems: any[] = [];
   for (var key in changes) {
     const storageChange = changes[key];
     if(key === 'dictionaryList') {
@@ -121,65 +121,67 @@ chrome.storage.local.onChanged.addListener((changes) => {
 
 /** 點擊右鍵選單時觸發 */
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const findItem = contextMenuItems.find((item) => item.id === info.menuItemId);
-  const url = findItem?.url;
-  const openingMethod = findItem?.openingMethod || 'popup';
-  const defaultWidth = findItem?.width || 800;
-  const defaultHeight = findItem?.height || 600;
-  if (
-    url &&
-    info.selectionText
-  ) {
-    const redirectUrl = url + encodeURIComponent(info.selectionText);
-    switch (openingMethod) {
-      case 'tab':
-        chrome.tabs.create({
-          url: redirectUrl
-        });
-        break;
-      case 'window':
-        (chrome.windows as any).create({
-          url: redirectUrl
-        });
-        break;
-      default:
-      case 'popup':
-        (chrome.windows as any).getCurrent((currentWindow: chrome.windows.Window) => {
-          // 獲取當前窗口的尺寸和位置
-          const currentWidth = currentWindow.width || 800;
-          const currentHeight = currentWindow.height || 600;
-          const currentLeft = currentWindow.left || 0;
-          const currentTop = currentWindow.top || 0;
-
-          // 定義新窗口的尺寸 
-          let newWidth = defaultWidth > currentWidth ? currentWidth - 150 : defaultWidth;
-          let newHeight = defaultHeight > currentHeight ? currentHeight - 150 : defaultHeight;
-
-          if (newWidth < 150) {
-            newWidth = 150;
-          }
-
-          if (newHeight < 150) {
-            newHeight = 150;
-          }
-
-          // 計算新窗口在屏幕正中間打開的left和top值
-          const left = Math.round(currentLeft + (currentWidth - newWidth) / 2);
-          const top = Math.round(currentTop + (currentHeight - newHeight) / 2);
-
-          // 創建新窗口
-          (chrome.windows as any).create({
-            url: redirectUrl,
-            type: 'panel',
-            width: newWidth,
-            height: newHeight,
-            left: left,
-            top: top
+  chrome.storage.local.get(['dictionaryList'], (result:any) => {
+    const findItem = result["dictionaryList"].find((item:any) => item.id === info.menuItemId);
+    const url = findItem?.url;
+    const openingMethod = findItem?.openingMethod || 'popup';
+    const defaultWidth = findItem?.width || 800;
+    const defaultHeight = findItem?.height || 600;
+    if (
+      url &&
+      info.selectionText
+    ) {
+      const redirectUrl = url + encodeURIComponent(info.selectionText);
+      switch (openingMethod) {
+        case 'tab':
+          chrome.tabs.create({
+            url: redirectUrl
           });
-        });
-        break;
+          break;
+        case 'window':
+          (chrome.windows as any).create({
+            url: redirectUrl
+          });
+          break;
+        default:
+        case 'popup':
+          (chrome.windows as any).getCurrent((currentWindow: chrome.windows.Window) => {
+            // 獲取當前窗口的尺寸和位置
+            const currentWidth = currentWindow.width || 800;
+            const currentHeight = currentWindow.height || 600;
+            const currentLeft = currentWindow.left || 0;
+            const currentTop = currentWindow.top || 0;
+  
+            // 定義新窗口的尺寸 
+            let newWidth = defaultWidth > currentWidth ? currentWidth - 150 : defaultWidth;
+            let newHeight = defaultHeight > currentHeight ? currentHeight - 150 : defaultHeight;
+  
+            if (newWidth < 150) {
+              newWidth = 150;
+            }
+  
+            if (newHeight < 150) {
+              newHeight = 150;
+            }
+  
+            // 計算新窗口在屏幕正中間打開的left和top值
+            const left = Math.round(currentLeft + (currentWidth - newWidth) / 2);
+            const top = Math.round(currentTop + (currentHeight - newHeight) / 2);
+  
+            // 創建新窗口
+            (chrome.windows as any).create({
+              url: redirectUrl,
+              type: 'panel',
+              width: newWidth,
+              height: newHeight,
+              left: left,
+              top: top
+            });
+          });
+          break;
+      }
     }
-  }
+  });
 });
 
 /** 接收來自 popup.htm、options.html 的訊息 */
