@@ -197,3 +197,10 @@
 - 增加 GPT3.5 的選項
 - url 從 input 改為 textarea
 - table 文字過長時，顯示...
+
+### 0.1.5 版
+
+送審日期：2024/4/6  
+通過日期：2024/4/7  
+
+- 選單資料都由 chrome.storage.local 取得，避免 chrome 休眠時抓不到資料
