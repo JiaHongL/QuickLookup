@@ -3,7 +3,7 @@ export  const ContextMenuItems = [
     {
       id: "wordExplorerGPT3_5",
       name: "Word Explorer ChatGPT 3.5",
-      url: "https://chat.openai.com/?q=請幫我解釋以下這個英文單字的詞義、詞性、拼英 (使用美式發音 的 kk 音標)、音節 (顯示切分方式)，並給出五個句子 (英中對照)，",
+      url: "https://chat.openai.com/?model=text-davinci-002-render-sha&q=請幫我解釋以下這個英文單字的意思、詞性、拼英 (使用美式發音 的 kk 音標)、音節 (顯示切分方式)，並給出五個句子 (英中對照)，這個單字是，",
       title: "Search '%s' in",
       contexts: ["selection"],
       visible: true,
